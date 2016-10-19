@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<style>
+  .cal-heatmap-container .q0{background-color: #FFF;}
+  .cal-heatmap-container .q1{background-color: yellow;}
+  .cal-heatmap-container .q2{background-color: blue;}
+  .cal-heatmap-container .q3{background-color: green;}
+  #triggerPop{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
+
+</head>
+<body>
+
+<div id='onClick-placeholder'></div>
+
+<div class='container'>
+<div class='row popoverContainer' >
+<div class='col-md-6'>
+<div id="cal-heatmap"></div>
+<br />
+<br />
+<center>
+<div id="triggerPop" data-toggle='popover' title=''></div>
+<div id="popover_content_wrapper" style="display: none">
+  <div><a href='#' class='popover-close'>close</a><h3></h3><p></p></div>
+</div>
+</center>
+<br />
+</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="cal-heatmap-custom.js"></script>
+
+
+<script type="text/javascript">
+  Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
+  var cal = new CalHeatMap();
+  var dt = new Date();
+
+  var checkinData = {
+   "1472668200": { "value": 1, "employee_id": 12, "checkin_ids": [34,67] },
+   "1472754600": { "value": 1, "employee_id": 12, "checkin_ids": [44,56] },
+   "1472841000": { "value": 1, "employee_id": 12, "checkin_ids": [66,67] },
+   "1472927400": { "value": 1, "employee_id": 12, "checkin_ids": [23,55] },
+   "1473013800": { "value": 1, "employee_id": 12, "checkin_ids": [32,77] },
+   "1473100200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473186600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473273000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473359400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473445800": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473532200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473618600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473705000": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473791400": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473877800": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1473964200": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474050600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474137000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474223400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474309800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474396200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474482600": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474569000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474655400": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474741800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474828200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1474914600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475001000": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475087400": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475173800": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475260200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475346600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475433000": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475519400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475605800": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475692200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475778600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475865000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1475951400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476037800": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476124200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476210600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476297000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476383400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476469800": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476556200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476642600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476729000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476815400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476901800": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1476988200": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477074600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477161000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477247400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477333800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477420200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477506600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477593000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477679400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477765800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477852200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1477938600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478025000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478111400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478197800": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478284200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478370600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478457000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478543400": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478629800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478716200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478802600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478889000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1478975400": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479061800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479148200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479234600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479321000": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479407400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479493800": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479580200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479666600": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479753000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479839400": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1479925800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480012200": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480098600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480185000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480271400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480357800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480444200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480530600": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480617000": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480703400": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480789800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480876200": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1480962600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481049000": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481135400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481221800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481308200": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481394600": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481481000": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481567400": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481653800": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481740200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481826600": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481913000": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1481999400": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482085800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482172200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482258600": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482345000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482431400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482517800": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482604200": { "value": 0, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482690600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482777000": { "value": 3, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482863400": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1482949800": { "value": 2, "employee_id": 12, "checkin_ids": [21,22] },
+   "1483036200": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] },
+   "1483122600": { "value": 1, "employee_id": 12, "checkin_ids": [21,22] } };
+
+  var dataParser = function(data) {
+    debugger;
+    var d3Data = {};
+    for (var d in data) {
+      d3Data[d] = data[d].value;
+    }
+    return d3Data;
+  };
+
+  cal.init({
+    start: new Date(2016, 8),
+    range: 4,
+    domain: "month",
+    subDomain: "day",
+    data: checkinData,
+    afterLoadData: dataParser,
+    cellSize: 20,
+    displayLegend: false,
+    domainMargin: 10,
+    cellPadding: 4,
+    // highlight: ["now", dt],
+    legend: [0, 1, 2, 3],
+    // legendColors: ["blue", "lightblue"],
+
+    onClick: function(date, nb, pos) {
+      debugger;
+      var unixTime = date.getUnixTime();
+      $('#triggerPop').popover('show');
+      // alert("["+pos.left+"]["+pos.top+"]");
+      $('#triggerPop').css('left', pos.x+"px").css('top', pos.y+"px");
+
+      $('#popover_content_wrapper h3').html("Checkin for date"+date);
+      $('#popover_content_wrapper p').html("<p>Value on "+date+" is "+nb+"!</p><p><h5>Other Data</h5> <p> Employee ID:"+checkinData[unixTime].employee_id+"</p><p> Checkin IDs:"+checkinData[unixTime].checkin_ids+"</p>");
+
+      $('.popover-close').on('click', function(){
+        $('#triggerPop').popover('hide');
+      });
+
+      debugger;
+      $('#triggerPop').popover('show');
+    }
+  });
+</script>
+
+<script>
+$(document).ready(function(){
+  $('#triggerPop').popover({
+    placement: 'bottom',
+    html: true,
+    container: '.popoverContainer',
+    content: function() {
+      return $('#popover_content_wrapper').html();
+    }
+  });
+  $(document).on("click",".popover-close",function(){
+    $('#triggerPop').popover('hide');
+  });
+});
+</script>
+</body>
+</html>
